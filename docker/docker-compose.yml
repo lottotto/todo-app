@@ -1,0 +1,27 @@
+version: "3"
+services:
+  app:
+    image: todo:0.0.3
+    environment: 
+      - POSTGRES_HOST=db
+    ports:
+      - 1323:1323
+    depends_on: 
+      - db
+
+  db:
+    image:  postgres:12.6
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+    ports:
+        - 5432:5432
+    volumes: 
+        - ./sql:/docker-entrypoint-initdb.d
+#   pg_admin:
+#     image:  dpage/pgadmin4:5.4
+#     environment: 
+#         - PGADMIN_DEFAULT_EMAIL=pgadmin@example.com
+#         - PGADMIN_DEFAULT_PASSWORD=password
+#     ports: 
+#         -  8081:80
