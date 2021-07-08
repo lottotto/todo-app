@@ -18,7 +18,8 @@ func getRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 
 	e.GET("/hello", api.GetHello)
-	e.GET("/tasks", api.GetAllTask)
+	e.GET("/task", api.GetAllTask)
+	e.POST("/task", api.PostTask)
 
 	return e
 }
