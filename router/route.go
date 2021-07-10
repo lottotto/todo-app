@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/lottotto/todo-app/api"
+	"github.com/lottotto/todo-app/db"
 )
 
 func Init() *echo.Echo {
@@ -16,11 +17,12 @@ func getRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/hello", api.GetHello)
-	e.GET("/task", api.GetAllTask)
-  e.POST("/task", api.PostTask)
-	e.GET("/status", api.GetHealthCheck)
+	handler := api.Handler{DB: db.Init()}
 
+	e.GET("/hello", handler.GetHello)
+	e.GET("/status", handler.GetHealthCheck)
+	e.GET("/task", handler.GetAllTask)
+	e.POST("/task", handler.PostTask)
 
 	return e
 }
