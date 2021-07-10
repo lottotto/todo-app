@@ -20,7 +20,7 @@ jobs:
       - store_artifacts:
           path: /tmp/test-result
   upload-coverage:
-    executor:
+    executors:
       docker:
         - image: cimg/base:2021.07
     steps:
