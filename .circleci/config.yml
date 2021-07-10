@@ -2,7 +2,7 @@
 version:  2.1
 orbs:
   go: circleci/go@1.7.0
-  codecov: codecov/codecov@1.0.2
+  codecov: codecov/codecov@1.2.3
 jobs:
   test:
     executor:
@@ -27,11 +27,8 @@ jobs:
     docker:
       - image:  cimg/base:2021.07
     steps:
-      - checkout
       - attach_workspace:
           at: /tmp/test-result
-      - run:  ls -la
-      - run:  ls -la /tmp/test-result
       - codecov/upload:
           file:   /tmp/test-result/cover.out
 
