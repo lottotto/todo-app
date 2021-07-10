@@ -32,5 +32,4 @@ func GetAllTask(c echo.Context) error {
 		taskResult = append(taskResult, task)
 	}
 	return c.JSON(http.StatusOK, taskResult)
-
 }
