@@ -19,7 +19,7 @@ jobs:
           verbose:  true
       - store_artifacts:
           path: /tmp/test-result
-  build:
+  codecov-update:
     docker:
       - image:  cimg/base:2021.07
     steps:
@@ -31,4 +31,6 @@ workflows:
   main:
     jobs:
       - test
-      - build
+      - codecov-update:
+          requires:
+            - test
