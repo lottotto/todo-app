@@ -41,5 +41,6 @@ workflows:
     jobs:
       - test
       - codecov-update:
+          context:  CODECOV
           requires:
             - test
