@@ -4,16 +4,14 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/lottotto/todo-app/db"
 	"github.com/lottotto/todo-app/model"
 )
 
-func GetHealthCheck(c echo.Context) error {
-	db := db.Init()
+func (hander Handler) GetHealthCheck(c echo.Context) error {
 
 	var health model.Health
 
-	err := db.Ping()
+	err := hander.DB.Ping()
 
 	if err != nil {
 		health.Status = http.StatusInternalServerError
