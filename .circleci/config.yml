@@ -20,7 +20,9 @@ jobs:
       - store_artifacts:
           path: /tmp/test-result
       - persist_to_workspace:
-          root: /tmp/test-result
+          root: /tmp
+          paths:
+            - test-result
   codecov-update:
     docker:
       - image:  cimg/base:2021.07
