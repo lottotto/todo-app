@@ -20,9 +20,9 @@ jobs:
       - store_artifacts:
           path: /tmp/test-result
       - persist_to_workspace:
-          root: /tmp
+          root: /tmp/test-result
           paths:
-            - test-result
+            - cover.out
   codecov-update:
     docker:
       - image:  cimg/base:2021.07
@@ -31,8 +31,7 @@ jobs:
       - attach_workspace:
           at: /tmp/test-result
       - run:  ls -la
-      - run:  ls -la /tmp/test-result/test-result
-      - run:  find /tmp
+      - run:  ls -la /tmp/test-result
       - codecov/upload:
           file:   /tmp/test-result/cover.out
 
