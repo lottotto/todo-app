@@ -19,11 +19,15 @@ jobs:
           verbose:  true
       - store_artifacts:
           path: /tmp/test-result
+      - persist_to_workspace:
+          root: /tmp/test-result
   codecov-update:
     docker:
       - image:  cimg/base:2021.07
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/test-result
       - run:  ls -la
       - codecov/upload:
           file:   /tmp/test-result/cover.out
