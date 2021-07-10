@@ -9,7 +9,6 @@ import (
 func Init() *echo.Echo {
 	return getRouter()
 }
-
 func getRouter() *echo.Echo {
 	e := echo.New()
 
