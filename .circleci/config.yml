@@ -17,7 +17,7 @@ jobs:
       - go/test:
           coverprofile: /tmp/test-result/cover.out
           verbose:  true
-       - store_artifacts:
+      - store_artifacts:
           path: /tmp/test-result
 workflows:
   main:
