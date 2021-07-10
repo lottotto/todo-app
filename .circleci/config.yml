@@ -38,6 +38,6 @@ workflows:
     jobs:
       - test
       - codecov-update:
-          # context:  CODECOV
+          context:  CODECOV
           requires:
             - test
