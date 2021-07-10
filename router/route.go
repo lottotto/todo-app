@@ -18,7 +18,9 @@ func getRouter() *echo.Echo {
 
 	e.GET("/hello", api.GetHello)
 	e.GET("/task", api.GetAllTask)
-	e.POST("/task", api.PostTask)
+  e.POST("/task", api.PostTask)
+	e.GET("/status", api.GetHealthCheck)
+
 
 	return e
 }
