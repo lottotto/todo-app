@@ -4,11 +4,6 @@ orbs:
   go: circleci/go@1.7.0
   codecov: codecov/codecov@1.0.2
 jobs:
-  build:
-    steps:
-      - codecov/upload:
-          file: 
-jobs:
   test:
     executor:
       name: go/default
