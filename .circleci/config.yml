@@ -19,7 +19,7 @@ jobs:
   test:
     executer:
       name: go/default
-      tag:  '1.14.3'
+      tag:  '1.14'
     steps:
       - checkout
       - go/load-cache
