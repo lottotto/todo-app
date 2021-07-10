@@ -20,6 +20,9 @@ jobs:
       - store_artifacts:
           path: /tmp/test-result
   upload-coverage:
+    executor:
+      docker:
+        - image: cimg/base:2021.07
     steps:
       - codecov/upload:
           file: /tmp/test-result/cover.out
