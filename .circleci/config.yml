@@ -23,6 +23,7 @@ jobs:
     docker:
       - image:  cimg/base:2021.07
     steps:
+      - checkout
       - run:  ls -la
       - codecov/upload:
           file:   /tmp/test-result/cover.out
