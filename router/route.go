@@ -9,7 +9,6 @@ import (
 func Init() *echo.Echo {
 	return getRouter()
 }
-
 func getRouter() *echo.Echo {
 	e := echo.New()
 
@@ -19,7 +18,9 @@ func getRouter() *echo.Echo {
 
 	e.GET("/hello", api.GetHello)
 	e.GET("/task", api.GetAllTask)
+  e.POST("/task", api.PostTask)
 	e.GET("/status", api.GetHealthCheck)
+
 
 	return e
 }
