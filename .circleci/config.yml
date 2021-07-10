@@ -20,9 +20,9 @@ jobs:
       - store_artifacts:
           path: /tmp/test-result
   upload-coverage:
-      steps:
-        - codecov/upload:
-            file: /tmp/test-result/cover.out
+    steps:
+      - codecov/upload:
+          file: /tmp/test-result/cover.out
 workflows:
   main:
     jobs:
