@@ -16,6 +16,8 @@ jobs:
       - go/test:
           coverprofile: cover.out
           verbose:  true
+       - store_artifacts:
+          path: cover.out
 workflows:
   main:
     jobs:
