@@ -31,7 +31,8 @@ jobs:
       - attach_workspace:
           at: /tmp/test-result
       - run:  ls -la
-      - run:  ls -la /tmp/test-result
+      - run:  ls -la /tmp/test-result/test-result
+      - run:  find /tmp
       - codecov/upload:
           file:   /tmp/test-result/cover.out
 
