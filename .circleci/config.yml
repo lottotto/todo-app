@@ -2,7 +2,12 @@
 version:  2.1
 orbs:
   go: circleci/go@1.7.0
-  codecov: codecov/codecov@1.2.3
+  codecov: codecov/codecov@1.0.2
+jobs:
+  build:
+    steps:
+      - codecov/upload:
+          file: 
 jobs:
   test:
     executor:
@@ -19,14 +24,13 @@ jobs:
           verbose:  true
       - store_artifacts:
           path: /tmp/test-result
-  upload-coverage:
-    docker: 
-      - image: cimg/base:2021.07
+  build:
     steps:
       - codecov/upload:
-          file: /tmp/test-result/cover.out
+          file:   /tmp/test-result/cover.out
+
+
 workflows:
   main:
     jobs:
       - test
-      - upload-coverage
