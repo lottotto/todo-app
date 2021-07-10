@@ -4,7 +4,7 @@ orbs:
   go: circleci/go@1.7.0
 
 jobs:
-  build:
+  test:
     executor:
       name: go/default
       tag: '1.14'
@@ -22,4 +22,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - build
+      - test
