@@ -13,11 +13,12 @@ jobs:
       - go/load-cache
       - go/mod-download
       - go/save-cache
+      - run:  mkdir -p /tmp/test-result
       - go/test:
-          coverprofile: cover.out
+          coverprofile: /tmp/test-result/cover.out
           verbose:  true
        - store_artifacts:
-          path: cover.out
+          path: /tmp/test-result
 workflows:
   main:
     jobs:
