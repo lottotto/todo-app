@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -52,4 +53,27 @@ func (hander Handler) PostTask(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusAccepted, task)
+}
+func (handler Handler) GetTaskById(c echo.Context) error {
+	var task model.Task
+	fmt.Println(c.Param("id"))
+	// query := fmt.Sprintf("select id, user_id, type_id, title, detail, deadline from task where id=%s;", c.Param("id"))
+	query := `select id, user_id, type_id, title, detail, deadline from task where id=$1;`
+
+	rows, err := handler.DB.Query(query, c.Param("id"))
+
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		err = rows.Scan(&task.Id, &task.UserId, &task.TypeId, &task.Title, &task.Detail, &task.Deadline)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if err != nil {
+		panic(err)
+	}
+	return c.JSON(http.StatusOK, task)
 }

@@ -96,5 +96,53 @@ func TestPostTask(t *testing.T) {
 	if assert.NoError(t, h.PostTask(c)) {
 		assert.Equal(t, http.StatusAccepted, rec.Code)
 	}
+}
+
+func TestGetTaskById(t *testing.T) {
+	// setting echo
+	e := echo.New()
+	req := httptest.NewRequest("GET", "/task/1", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	// sqlmock
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	// sql := `select id, user_id, type_id, title, detail, deadline from task where id=(.+);`
+	sql := `select (.+) from task where id=(.+);`
+
+	columns := []string{"id", "user_id", "type_id", "title", "detail", "deadline"}
+
+	mock.ExpectQuery(sql).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1,
+				1,
+				1,
+				"JUnitを学習",
+				"テストの仕方を学習する",
+				time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC),
+			),
+		)
+	h := api.Handler{DB: db}
+	task := model.Task{
+		Id:       1,
+		UserId:   1,
+		TypeId:   1,
+		Title:    "JUnitを学習",
+		Detail:   "テストの仕方を学習する",
+		Deadline: time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC),
+	}
+	expected, err := json.Marshal(task)
+	if err != nil {
+		t.Fatal("json marshal error")
+	}
+
+	if assert.NoError(t, h.GetTaskById(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, string(expected)+"\n", rec.Body.String())
+
+	}
 
 }
