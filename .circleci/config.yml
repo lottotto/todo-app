@@ -1,0 +1,67 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version:  2.1
+orbs:
+  go: circleci/go@1.7.0
+  codecov: codecov/codecov@1.0.4
+  docker: circleci/docker@1.6.0
+jobs:
+  test:
+    executor:
+      name: go/default
+      tag: '1.14'
+    steps:
+      - checkout
+      - go/load-cache
+      - go/mod-download
+      - go/save-cache
+      - run:  mkdir -p /tmp/test-result
+      - go/test:
+          coverprofile: /tmp/test-result/cover.out
+          verbose:  true
+      - codecov/upload:
+          file: /tmp/test-result/cover.out
+  build:
+    executor:
+      name: go/default
+      tag:  '1.14'
+    steps:
+      - checkout
+      - go/load-cache
+      - go/mod-download
+      - go/save-cache
+      - run:  mkdir -p /tmp/artifact
+      - run:  go build -o /tmp/artifact/main main.go
+      - store_artifacts:
+          path: /tmp/artifact/main
+  build-container:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - run:  env
+      - docker/build:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag:  $CIRCLE_TAG,latest
+      - docker/push:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag:  $CIRCLE_TAG,latest
+
+
+workflows:
+  main:
+    jobs:
+      - test:
+          context:  CODECOV
+      - build:
+          requires:
+            - test
+      - build-container:
+          context:  DOCKER_CREDENTIAL
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              ignore: /.*/
+
+              
