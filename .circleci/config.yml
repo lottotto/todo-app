@@ -57,9 +57,7 @@ workflows:
       - build:
           requires:
             - test
-      - docker/publish:
-          image:  ${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}
-          tag:  ${CIRCLE_TAG}
+      - build-container:
           context:  DOCKER_CREDENTIAL
   # build-container:
   #   triggers:
