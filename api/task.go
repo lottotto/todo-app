@@ -57,7 +57,6 @@ func (hander Handler) PostTask(c echo.Context) error {
 func (handler Handler) GetTaskById(c echo.Context) error {
 	var task model.Task
 	fmt.Println(c.Param("id"))
-	// query := fmt.Sprintf("select id, user_id, type_id, title, detail, deadline from task where id=%s;", c.Param("id"))
 	query := `select id, user_id, type_id, title, detail, deadline from task where id=$1;`
 
 	rows, err := handler.DB.Query(query, c.Param("id"))
