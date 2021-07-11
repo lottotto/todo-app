@@ -3,6 +3,7 @@ version:  2.1
 orbs:
   go: circleci/go@1.7.0
   codecov: codecov/codecov@1.0.4
+  docker: circleci/docker@1.6.0
 jobs:
   test:
     executor:
@@ -32,6 +33,11 @@ jobs:
       - run:  go build -o /tmp/artifact/main main.go
       - store_artifacts:
           path: /tmp/artifact/main
+  # container-build:
+  #   steps:
+  #     - docker/publish:
+  #         image:  $DOCKER_USER_NAME/$CIRCLE_PROJECT_REPONAME
+  #         tag:  $CIRCLE_TAG
 
 
 workflows:
@@ -41,8 +47,17 @@ workflows:
           context:  CODECOV
       - build:
           requires:
-              - test
-      # - codecov-update:
-      #     context:  CODECOV
-      #     requires:
-      #       - test
+            - test
+      - docker/publish:
+          image:  ${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}
+          tag:  ${CIRCLE_TAG}
+          context:  DOCKER_CREDENTIAL
+          requires:
+            - build
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              ignore: /.*/
+
+              
