@@ -59,6 +59,11 @@ workflows:
             - test
       - build-container:
           context:  DOCKER_CREDENTIAL
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              ignore: /.*/
   # build-container:
   #   triggers:
   #     filters:
