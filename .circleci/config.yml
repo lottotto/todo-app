@@ -42,12 +42,10 @@ jobs:
       - run:  env
       - docker/build:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag:  $CIRCLE_TAG
+          tag:  $CIRCLE_TAG,latest
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag:  $CIRCLE_TAG
-      - docker/push:
-          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag:  $CIRCLE_TAG,latest
 
 
 workflows:
