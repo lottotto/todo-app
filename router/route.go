@@ -23,6 +23,7 @@ func getRouter() *echo.Echo {
 	e.GET("/status", handler.GetHealthCheck)
 	e.GET("/task", handler.GetAllTask)
 	e.POST("/task", handler.PostTask)
+	e.GET("/task/:id", handler.GetTaskById)
 
 	return e
 }
