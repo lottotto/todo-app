@@ -1,14 +1,19 @@
 version: "3"
 services:
+  nginx:
+      image:  nginx
+      volumes: 
+        - ./nginx:/etc/nginx/conf.d
+      ports:
+        - 80:80
+      depends_on: 
+        - app
   app:
-    image: todo
+    image: danish9966/todo-app
     environment: 
       - POSTGRES_HOST=db
-    ports:
-      - 1323:1323
     depends_on: 
       - db
-
   db:
     image:  postgres:12.6
     environment:
