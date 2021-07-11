@@ -17,27 +17,34 @@ jobs:
       - go/test:
           coverprofile: /tmp/test-result/cover.out
           verbose:  true
-      - store_artifacts:
-          path: /tmp/test-result
-      - persist_to_workspace:
-          root: /tmp/test-result
-          paths:
-            - cover.out
-  codecov-update:
-    docker:
-      - image:  cimg/base:2021.07
-    steps:
-      - attach_workspace:
-          at: /tmp/test-result
+      # - store_artifacts:
+      #     path: /tmp/test-result
+      # - persist_to_workspace:
+      #     root: /tmp/test-result
+      #     paths:
+      #       - cover.out
       - codecov/upload:
-          file:   /tmp/test-result/cover.out
+          file: /tmp/test-result/cover.out
+  # codecov-update:
+  #   docker:
+  #     - image:  cimg/base:2021.07
+  #   steps:
+  #     - attach_workspace:
+  #         at: /tmp/test-result
+  #     - codecov/upload:
+  #         file:   /tmp/test-result/cover.out
+  # build:
+  #   executor:
+  #     name: go/default
+  #     tag:  '1.14'
 
 
 workflows:
   main:
     jobs:
-      - test
-      - codecov-update:
+      - test:
           context:  CODECOV
-          requires:
-            - test
+      # - codecov-update:
+      #     context:  CODECOV
+      #     requires:
+      #       - test
