@@ -33,11 +33,20 @@ jobs:
       - run:  go build -o /tmp/artifact/main main.go
       - store_artifacts:
           path: /tmp/artifact/main
-  # container-build:
-  #   steps:
-  #     - docker/publish:
-  #         image:  $DOCKER_USER_NAME/$CIRCLE_PROJECT_REPONAME
-  #         tag:  $CIRCLE_TAG
+  build-container:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - run:  env
+      - docker/build:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag:  $CIRCLE_TAG
+      - docker/push:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag:  $CIRCLE_TAG
+      
 
 
 workflows:
@@ -52,12 +61,17 @@ workflows:
           image:  ${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}
           tag:  ${CIRCLE_TAG}
           context:  DOCKER_CREDENTIAL
-          requires:
-            - build
-          filters:
-            tags:
-              only: /v.*/
-            branches:
-              ignore: /.*/
+  # build-container:
+  #   triggers:
+  #     filters:
+  #       tags: 
+  #         only: /v.*/
+  #       branches:
+  #         ignore: /.*/
+  #   jobs:
+  #     - docker/publish:
+  #         image:  ${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}
+  #         tag:  ${CIRCLE_TAG}
+  #         context:  DOCKER_CREDENTIAL
 
               
