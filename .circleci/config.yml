@@ -51,6 +51,7 @@ workflows:
       - docker/publish:
           image:  $DOCKER_USER_NAME/$CIRCLE_PROJECT_REPONAME
           tag:  $CIRCLE_TAG
+          context:  DOCKER_CREDENTIAL
           requires:
             - build
           filters:
