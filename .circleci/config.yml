@@ -57,7 +57,7 @@ jobs:
             fingerprints:
               - "5d:37:84:02:32:1d:20:07:10:a6:38:db:ec:3d:2b:0e"
         - run:  touch hogehoge
-        - run:  scp hogehoge $SSH_USER@$SSH_HOST:/home/$SSH_USER
+        - run:  scp -o StrictHostKeyChecking=no hogehoge $SSH_USER@$SSH_HOST:/home/$SSH_USER
 
 
 workflows:
