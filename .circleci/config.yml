@@ -53,12 +53,11 @@ jobs:
       docker: 
         - image: cimg/base:2021.07
       steps:
-        - attach_workspace:
-            at: /tmp/artifact
         - add_ssh_keys:
             fingerprints:
               - "5d:37:84:02:32:1d:20:07:10:a6:38:db:ec:3d:2b:0e"
-        - run:  scp /tmp/artifact/main $SSH_USER@$SSH_HOST:/home/$SSH_USER
+        - run:  touch hogehoge
+        - run:  scp hogehoge $SSH_USER@$SSH_HOST:/home/$SSH_USER
 
 
 workflows:
