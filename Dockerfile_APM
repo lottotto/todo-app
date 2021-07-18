@@ -1,8 +1,8 @@
 FROM golang:1.14
 WORKDIR /my-todo-app
 COPY . .
+RUN go get go.elastic.co/apm
 RUN GOOS=linux GOARCH=amd64 go build -o /bin/main main.go
 EXPOSE 1323
 EXPOSE 8200
-RUN go get go.elastic.co/apm
 ENTRYPOINT ["/bin/main"]

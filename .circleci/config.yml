@@ -31,6 +31,9 @@ jobs:
       - go/save-cache
       - run:  mkdir -p /tmp/artifact
       - run:  go build -o /tmp/artifact/main main.go
+      - persist_to_workspace:
+          root: /tmp/artifact
+          paths:  main
       - store_artifacts:
           path: /tmp/artifact/main
   build-container:
@@ -46,6 +49,16 @@ jobs:
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag:  $CIRCLE_TAG,latest
+  deploy-ec2:
+      docker: 
+        - image: cimg/base:2021.07
+      steps:
+        - attach_workspace:
+            at: /tmp/artifact
+        - add_ssh_keys:
+            fingerprints:
+              - "5d:37:84:02:32:1d:20:07:10:a6:38:db:ec:3d:2b:0e"
+        - run:  scp /tmp/artifact/main $SSH_USER@$SSH_HOST:/home/$SSH_USER
 
 
 workflows:
@@ -56,6 +69,7 @@ workflows:
       - build:
           requires:
             - test
+      - deploy-ec2
       - build-container:
           context:  DOCKER_CREDENTIAL
           filters:

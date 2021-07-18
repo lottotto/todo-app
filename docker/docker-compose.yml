@@ -1,21 +1,24 @@
 version: "3"
 services:
-  # nginx:
-  #     image:  nginx
-  #     volumes: 
-  #       - ./nginx:/etc/nginx/conf.d
-  #     ports:
-  #       - 80:80
-  #     depends_on: 
-  #       - app
-  # app:
-  #   # image: danish9966/todo-app
-  #   image: todo-app
-  #   environment: 
-  #     - POSTGRES_HOST=db
-  #     - ELASTIC_APM_SERVER_URL=13.115.91.235
-  #   depends_on: 
-  #     - db
+  nginx:
+      image:  nginx
+      volumes: 
+        - ./nginx:/etc/nginx/conf.d
+      ports:
+        - 80:80
+      depends_on: 
+        - app
+  app:
+    # image: danish9966/todo-app
+    image: todo-app
+    environment: 
+      - POSTGRES_HOST=db
+      - ELASTIC_APM_SERVER_URL=http://13.231.193.175:8200
+      - ELASTIC_APM_LOG_FILE=stderr
+      - ELASTIC_APM_LOG_LEVEL=debug
+      - ENABLE_ELASTIC_APM=true
+    depends_on: 
+      - db
   
   db:
     image:  postgres:12.6
