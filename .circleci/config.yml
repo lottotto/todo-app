@@ -61,7 +61,7 @@ jobs:
         #       - "SO:ME:FIN:G:ER:PR:IN:T"
 
         - run:  touch hogehoge
-        - run:  scp -o StrictHostKeyChecking=no hogehoge $SSH_USER@$SSH_HOST:/home/$SSH_USER
+        - run:  scp -o StrictHostKeyChecking=no hogehoge $SSH_USER@$SSH_ADRESS:/home/$SSH_USER
 
 
 workflows:
