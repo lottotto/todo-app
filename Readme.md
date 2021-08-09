@@ -2,7 +2,13 @@
 [![CircleCI](https://circleci.com/gh/lottotto/todo-app.svg?style=svg)](https://circleci.com/gh/lottotto/todo-app)
 [![codecov](https://codecov.io/gh/lottotto/todo-app/branch/main/graph/badge.svg?token=HPYQ70GGG3)](https://codecov.io/gh/lottotto/todo-app)
 [![Docker Automated build](https://img.shields.io/docker/automated/danish9966/todo-app)](https://hub.docker.com/repository/docker/danish9966/todo-app)
-# ToDo app
+# ToDo api
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flottotto%2Ftodo-app.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flottotto%2Ftodo-app?ref=badge_shield)
+
+簡単なtodo アプリを実装します.
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flottotto%2Ftodo-app.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flottotto%2Ftodo-app?ref=badge_large)
 簡単なtodo アプリを実装します.
 
 
