@@ -14,4 +14,6 @@ type Task struct {
 	Detail string `json:"detail,omitempty"`
 
 	Deadline time.Time `json:"deadline"`
+
+	Done bool `json:"done"`
 }

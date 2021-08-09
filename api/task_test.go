@@ -39,11 +39,11 @@ func TestGetAllTask(t *testing.T) {
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
 	}
-	sql := `SELECT id, user_id, type_id, title, detail, deadline from task`
-	columns := []string{"id", "user_id", "type_id", "title", "detail", "deadline"}
-	mock.ExpectQuery(sql).WillReturnRows(sqlmock.NewRows(columns).AddRow(1, 1, 1, "JUnitを学習", "テストの仕方を学習する", time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC)))
+	sql := `SELECT id, user_id, type_id, title, detail, deadline, done from task`
+	columns := []string{"id", "user_id", "type_id", "title", "detail", "deadline", "done"}
+	mock.ExpectQuery(sql).WillReturnRows(sqlmock.NewRows(columns).AddRow(1, 1, 1, "JUnitを学習", "テストの仕方を学習する", time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC), true))
 
-	task := model.Task{Id: 1, UserId: 1, TypeId: 1, Title: "JUnitを学習", Detail: "テストの仕方を学習する", Deadline: time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC)}
+	task := model.Task{Id: 1, UserId: 1, TypeId: 1, Title: "JUnitを学習", Detail: "テストの仕方を学習する", Deadline: time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC), Done: true}
 	var tasks []model.Task
 	tasks = append(tasks, task)
 	expected, err := json.Marshal(tasks)
@@ -70,6 +70,7 @@ func TestPostTask(t *testing.T) {
 		Title:    "Go言語を学習",
 		Detail:   "Go言語のWEBアプリケーションフレームワークを学習する",
 		Deadline: time.Date(2021, time.August, 11, 15, 0, 0, 0, time.UTC),
+		Done:     true,
 	}
 	requestParam, err := json.Marshal(requestParamTask)
 	if err != nil {
@@ -113,7 +114,7 @@ func TestGetTaskById(t *testing.T) {
 	// sql := `select id, user_id, type_id, title, detail, deadline from task where id=(.+);`
 	sql := `select (.+) from task where id=(.+);`
 
-	columns := []string{"id", "user_id", "type_id", "title", "detail", "deadline"}
+	columns := []string{"id", "user_id", "type_id", "title", "detail", "deadline", "done"}
 
 	mock.ExpectQuery(sql).
 		WillReturnRows(sqlmock.NewRows(columns).
@@ -123,6 +124,7 @@ func TestGetTaskById(t *testing.T) {
 				"JUnitを学習",
 				"テストの仕方を学習する",
 				time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC),
+				true,
 			),
 		)
 	h := api.Handler{DB: db}
@@ -133,6 +135,7 @@ func TestGetTaskById(t *testing.T) {
 		Title:    "JUnitを学習",
 		Detail:   "テストの仕方を学習する",
 		Deadline: time.Date(2020, time.July, 7, 15, 0, 0, 0, time.UTC),
+		Done:     true,
 	}
 	expected, err := json.Marshal(task)
 	if err != nil {
