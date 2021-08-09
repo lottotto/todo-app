@@ -9,7 +9,7 @@ services:
       depends_on: 
         - app
   app:
-    image: danish9966/todo-app
+    image: danish9966/todo-app:latest
     environment: 
       - POSTGRES_HOST=db
       # - ELASTIC_APM_SERVER_URL=http://x.x.x.x:8200
