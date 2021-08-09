@@ -46,7 +46,7 @@ func (hander Handler) PostTask(c echo.Context) error {
 	}
 	// rowsの戻りがない場合は db.Exec() を使うこと。postgresは戻りがあるので、queryでOK
 	// 戻りのIDを取得するには、QueryRowはないとダメ、queryだとうごきません
-	err := hander.DB.QueryRowContext(c.Request().Context(), "INSERT INTO task(user_id, type_id, title, detail, deadline, done) VALUES ($1,$2,$3,$4,$5) RETURNING id;",
+	err := hander.DB.QueryRowContext(c.Request().Context(), "INSERT INTO task(user_id, type_id, title, detail, deadline, done) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id;",
 		task.UserId, task.TypeId, task.Title, task.Detail, task.Deadline).Scan(&task.Id)
 	if err != nil {
 		panic(err)
