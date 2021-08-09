@@ -12,3 +12,9 @@
 - ローカルで`go get go.elastic.co/apm`を実行しapm agent をインストールする
 - 環境変数`ELASTIC_APM_SERVER_URL`にapmserver のURLを設定する.
   - ex) `http://x.x.x.x:8200`
+
+
+# circle CI でのEC2にSCPでデプロイする方法
+- add_ssh_keysを利用し、CircleCIにSSHの鍵(秘密鍵)を登録しておく.その際hostnameが聞かれるので、IPアドレスかhostnameを入力すること
+- fingerprintsに登録したSSHの鍵を指定することでcircleCIが回っているコンテナに秘密鍵がダウンロードされる。それと同時にsshのconfigもダウンロードされる
+- `scp -o StrictHostKeyChecking=no <SRC_FILE_PATH> <SSH_USER>@<SSH_ADRESS>:<DST_FILE_PATH> `を実行する

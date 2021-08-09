@@ -56,8 +56,7 @@ jobs:
         - add_ssh_keys:
             fingerprints:
               - "5d:37:84:02:32:1d:20:07:10:a6:38:db:ec:3d:2b:0e"
-
-        - run:  touch hogehoge
+        - run: touch hogehoge
         - run:  scp -o StrictHostKeyChecking=no hogehoge $SSH_USER@$SSH_ADRESS:/home/$SSH_USER
 workflows:
   main:
@@ -67,13 +66,17 @@ workflows:
       - build:
           requires:
             - test
-      - deploy-ec2
       - build-container:
           context:  DOCKER_CREDENTIAL
+          requires:
+            - test
           filters:
             tags:
               only: /v.*/
             branches:
               ignore: /.*/
+      - deploy-ec2:
+          requires:
+            - build
 
               
