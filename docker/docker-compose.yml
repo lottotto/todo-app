@@ -9,14 +9,13 @@ services:
       depends_on: 
         - app
   app:
-    # image: danish9966/todo-app
-    image: todo-app
+    image: danish9966/todo-app
     environment: 
       - POSTGRES_HOST=db
-      - ELASTIC_APM_SERVER_URL=http://13.231.193.175:8200
-      - ELASTIC_APM_LOG_FILE=stderr
-      - ELASTIC_APM_LOG_LEVEL=debug
-      - ENABLE_ELASTIC_APM=true
+      # - ELASTIC_APM_SERVER_URL=http://x.x.x.x:8200
+      # - ELASTIC_APM_LOG_FILE=stderr
+      # - ELASTIC_APM_LOG_LEVEL=debug
+      # - ENABLE_ELASTIC_APM=true
     depends_on: 
       - db
   
@@ -29,10 +28,3 @@ services:
         - 5432:5432
     volumes: 
         - ./sql:/docker-entrypoint-initdb.d
-#   pg_admin:
-#     image:  dpage/pgadmin4:5.4
-#     environment: 
-#         - PGADMIN_DEFAULT_EMAIL=pgadmin@example.com
-#         - PGADMIN_DEFAULT_PASSWORD=password
-#     ports: 
-#         -  8081:80

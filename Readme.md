@@ -12,3 +12,4 @@
 - ローカルで`go get go.elastic.co/apm`を実行しapm agent をインストールする
 - 環境変数`ELASTIC_APM_SERVER_URL`にapmserver のURLを設定する.
   - ex) `http://x.x.x.x:8200`
+- elastic APMでDBの性能などを確認できるようにするためには、`db.QueryContext`メソッドを利用し、`c.Request().Context()`を引数に追加すること
