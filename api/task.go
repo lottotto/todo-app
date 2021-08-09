@@ -56,7 +56,7 @@ func (hander Handler) PostTask(c echo.Context) error {
 }
 func (handler Handler) GetTaskById(c echo.Context) error {
 	var task model.Task
-	query := `select id, user_id, type_id, title, detail, deadline from task where id=$1;`
+	query := `select id, user_id, type_id, title, detail, deadline, done from task where id=$1;`
 	rows, err := handler.DB.QueryContext(c.Request().Context(), query, c.Param("id"))
 
 	if err != nil {
