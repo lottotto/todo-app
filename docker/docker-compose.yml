@@ -9,14 +9,13 @@ services:
       depends_on: 
         - app
   app:
-    # image: danish9966/todo-app
-    image: todo-app
+    image: danish9966/todo-app
     environment: 
       - POSTGRES_HOST=db
-      - ELASTIC_APM_SERVER_URL=http://13.231.193.175:8200
-      - ELASTIC_APM_LOG_FILE=stderr
-      - ELASTIC_APM_LOG_LEVEL=debug
-      - ENABLE_ELASTIC_APM=true
+      # - ELASTIC_APM_SERVER_URL=http://xxxx.xxxx.xxxx.xxxx:8200
+      # - ELASTIC_APM_LOG_FILE=stderr
+      # - ELASTIC_APM_LOG_LEVEL=debug
+      # - ENABLE_ELASTIC_APM=true
     depends_on: 
       - db
   
