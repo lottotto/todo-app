@@ -68,8 +68,6 @@ workflows:
             - test
       - build-container:
           context:  DOCKER_CREDENTIAL
-          requires:
-            - test
           filters:
             tags:
               only: /v.*/
