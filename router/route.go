@@ -14,6 +14,7 @@ func getRouter() *echo.Echo {
 	e := echo.New()
 
 	//middleware
+	e.Use(middleware.CORS())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
