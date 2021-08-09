@@ -8,5 +8,6 @@ CREATE TABLE task (
   title varchar NOT NULL,
   detail text,
   deadline timestamp NOT NULL,
+  done boolean,
   PRIMARY KEY (id)
 ) ;
