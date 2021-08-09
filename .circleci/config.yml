@@ -31,6 +31,9 @@ jobs:
       - go/save-cache
       - run:  mkdir -p /tmp/artifact
       - run:  go build -o /tmp/artifact/main main.go
+      - persist_to_workspace:
+          root: /tmp/artifact
+          paths:  main
       - store_artifacts:
           path: /tmp/artifact/main
   build-container:
@@ -46,7 +49,6 @@ jobs:
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag:  $CIRCLE_TAG,latest
-
 
 workflows:
   main:

@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/lottotto/todo-app/api"
 	"github.com/lottotto/todo-app/db"
+	"go.elastic.co/apm/module/apmecho"
 )
 
 func Init() *echo.Echo {
@@ -17,6 +18,7 @@ func getRouter() *echo.Echo {
 	e.Use(middleware.CORS())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(apmecho.Middleware())
 
 	handler := api.Handler{DB: db.Init()}
 

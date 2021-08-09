@@ -2,7 +2,6 @@ package api
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -19,7 +18,8 @@ func (hander Handler) GetHello(c echo.Context) error {
 }
 
 func (hander Handler) GetAllTask(c echo.Context) error {
-	rows, err := hander.DB.Query("SELECT id, user_id, type_id, title, detail, deadline from task")
+	// elastic apm用に修正
+	rows, err := hander.DB.QueryContext(c.Request().Context(), "SELECT id, user_id, type_id, title, detail, deadline from task")
 
 	if err != nil {
 		panic(err)
@@ -46,7 +46,7 @@ func (hander Handler) PostTask(c echo.Context) error {
 	}
 	// rowsの戻りがない場合は db.Exec() を使うこと。postgresは戻りがあるので、queryでOK
 	// 戻りのIDを取得するには、QueryRowはないとダメ、queryだとうごきません
-	err := hander.DB.QueryRow("INSERT INTO task(user_id, type_id, title, detail, deadline) VALUES ($1,$2,$3,$4,$5) RETURNING id;",
+	err := hander.DB.QueryRowContext(c.Request().Context(), "INSERT INTO task(user_id, type_id, title, detail, deadline) VALUES ($1,$2,$3,$4,$5) RETURNING id;",
 		task.UserId, task.TypeId, task.Title, task.Detail, task.Deadline).Scan(&task.Id)
 	if err != nil {
 		panic(err)
@@ -56,10 +56,8 @@ func (hander Handler) PostTask(c echo.Context) error {
 }
 func (handler Handler) GetTaskById(c echo.Context) error {
 	var task model.Task
-	fmt.Println(c.Param("id"))
 	query := `select id, user_id, type_id, title, detail, deadline from task where id=$1;`
-
-	rows, err := handler.DB.Query(query, c.Param("id"))
+	rows, err := handler.DB.QueryContext(c.Request().Context(), query, c.Param("id"))
 
 	if err != nil {
 		panic(err)
