@@ -13,5 +13,7 @@ type Task struct {
 
 	Detail string `json:"detail,omitempty"`
 
-	Deadline time.Time `json:"deadline"`
+	Deadline time.Time `json:"deadline,omitempty"`
+
+	Done bool `json:"done"`
 }
